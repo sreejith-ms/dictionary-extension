@@ -1,0 +1,106 @@
+body {
+	font-family: Helvetica, Arial;
+	font-size: 14px;
+	line-height: 20px;
+	margin: 0;
+	padding: 0;
+	width: 450px;
+	height: 550px;
+}
+
+#wrap {
+	margin: 25px 15px 15px 15px;
+	width: 450px;
+	height: 550px
+}
+
+#logo {
+	text-align: center;
+}
+
+#main {
+	margin-top: 30px;
+}
+
+form {
+	text-align: center;
+}
+	form label {
+		margin-bottom: 15px;
+	}
+
+	
+#q {
+	font-size: 22px;
+	float: left;
+	width: 270px;
+}
+
+#results {
+	margin-top: 30px;
+	overflow: auto;
+	width: 430px;
+	height:330px;
+}
+
+#loading {
+	position: absolute;
+	left: 225px;
+	top: 300px;
+	display: none;
+}
+
+
+.button {
+	background: #000;
+	color: #fff;
+	border: 0;
+	cursor: pointer;
+	padding: 10px;
+}
+
+h1, h2, h3 {
+	margin: 0 0 5px 0;
+}
+h2 {
+	font-size: 18px;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+	ul li {
+		margin-bottom: 25px;
+	}
+	li ul {
+		margin-left: 40px;
+		list-style-type: circle;
+	}
+	li ul li {
+		margin-bottom: 2px;
+	}
+
+label {
+	font-weight: bold;
+	display: block;
+}
+
+input, textarea, select {
+	font-family: Helvetica, Arial;
+	font-size: 18px;
+	padding: 6px;
+	border: 1px solid #aaa;
+	
+	border-radius: 8px;
+}
+input:focus {
+    outline: none;
+}
+a {
+	color: #000;
+}
+a:hover {
+	color: #666;
+}

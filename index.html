@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Olam</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<script src="zepto.js"></script>
+	<script src="main.js"></script>
+</head>
+<body>
+
+<div id="wrap">
+	<div id="logo">
+		<a href="http://olam.in" target="_blank"><img src="logo_small.png" alt="Olam"/></a>
+	</div>
+	
+	<img src="loading.gif" alt="" id="loading" />
+
+	<div id="main">
+		<form method="get" action="" id="search">
+			<div>
+			<input type="hidden" name="action" value="en_ml" />
+			<label>ഒരു ഇംഗ്ലീഷ് വാക്ക് എഴുതുക</label>
+			<input type="text" name="q" id="q" value="" maxlength="50" />
+			<input type="submit" value="തിരയുക" class="button" />
+			</div>
+
+		</form>
+		
+	</div>
+	
+	<ul id="results">
+
+	</ul>
+	
+</div>
+
+
+</body>
+</html>
