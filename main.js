@@ -1,3 +1,5 @@
+import {addToStore} from './idb.js';
+
 $(document).ready(function() {
   $("#search").submit(function() {
     var q = escape(
@@ -32,7 +34,7 @@ $(document).ready(function() {
       );
       return;
     }
-    addToStore(q, data);
+    
     var html = "";
     $(data).each(function() {
       html += "<li>";
@@ -45,38 +47,12 @@ $(document).ready(function() {
       html += "</ul></li>";
     });
 
-    $("#results").html(html);
+	$("#results").html(html);
+	
+	addToStore(cleanUp(q), data);
   }
 
   $("#q").focus();
 });
-
-const addToStore = async (query, results) => {
-  try {
-    let item = {};
-	const date = new Date().getTime();
-	query = cleanUp(query);
-    const existingItem = await browser.storage.local.get(query);
-    if (
-      !!existingItem &&
-      Object.keys(existingItem).length &&
-      existingItem[query]
-    ) {
-      item = existingItem;
-      item[query].ts.push(date);
-      item[query].occurance += 1;
-    } else {
-      item[query] = {
-        word: query,
-        definition: results,
-        ts: [date],
-        occurance: 1
-      };
-    }
-    await browser.storage.local.set(item);
-  } catch (error) {
-    console.error("Error", error);
-  }
-};
 
 const cleanUp = q => q.toLowerCase().replace("%20", "").trim();
