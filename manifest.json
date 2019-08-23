@@ -1,6 +1,6 @@
 {
 	"manifest_version": 2,
-	"version": "2.8",
+	"version": "2.8.1",
 	"name": "English Dictionary",
 	"description": "English Malayalam dictionary",
 
@@ -14,7 +14,6 @@
 		"128": "128.png"
 	},
 	"permissions": [
-		"webrequest",
 		"storage"
 	]
 }
