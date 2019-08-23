@@ -1,58 +1,68 @@
 import {addToStore} from './idb.js';
 
-$(document).ready(function() {
-  $("#search").submit(function() {
-    var q = escape(
-      $("#q")
-        .val()
-        .replace(/[^a-z0-9\+\-\s]/gi, "")
-        .replace(/\s+/g, " ")
-    );
-    if (!q) return false;
+document.addEventListener("DOMContentLoaded", () => {
+	document.getElementById("q").focus();
+});
 
-    loading(true);
-
-    $.getJSON("https://olam.in/Dictionary/en_ml/" + q + "?json=1", function(
-      data
-    ) {
-      loading(false);
-      render(q, data);
-    });
-    return false;
-  });
-
-  function loading(show) {
-    show ? $("#loading").show() : $("#loading").hide();
-  }
-
-  function render(q, data) {
-    if (!data || data.length < 1) {
-      $("#results").html(
-        'നിങ്ങള്‍ അന്വേഷിച്ച "' +
-          q +
-          '" എന്ന പദത്തിന്റെ അര്‍ഥം കണ്ടെത്താനായില്ല. സാധ്യമെങ്കില്‍, ദയവായി <a href="http://olam.in/Add/" target="_blank">നിഘണ്ടുവില്‍ ചേര്‍ക്കുക.</a>'
-      );
-      return;
-    }
-    
-    var html = "";
-    $(data).each(function() {
-      html += "<li>";
-      html += "<h2>" + this.word + '</h2><ul class="definitions">';
-
-      $(this.definitions).each(function() {
-        html += "<li>" + this + "</li>";
-      });
-
-      html += "</ul></li>";
-    });
-
-	$("#results").html(html);
-	
-	addToStore(cleanUp(q), data);
-  }
-
-  $("#q").focus();
+document.getElementById("search").addEventListener("submit", async e => {
+	const q = escapeString(document.getElementById("q").value);
+	if (!q) return;
+	//loading(true);
+	e.preventDefault();
+	// const requests = [getMalayalam(q), getEnglish(q)];
+	// const results = await Promise.all(requests);
+	// loading(false);
+	// renderMalayalam(q, results[0]);
+	// renderEnglish(q, results[1]);
+	getMalayalam(q).then(d => renderMalayalam(q, d));
+	getEnglish(q).then(d => renderEnglish(q, d));
 });
 
 const cleanUp = q => q.toLowerCase().replace("%20", "").trim();
+const escapeString = q => escape(q.replace(/[^a-z0-9\+\-\s]/gi, "").replace(/\s+/g, " "));
+const loading = show => {
+	const element = document.getElementById("loading");
+	show ? element.style.display = "" : element.style.display = "none";
+};
+
+const getEnglish = async q => {
+	const request = await fetch(`https://googledictionaryapi.eu-gb.mybluemix.net/?define=${q}&lang=en`);
+	return await request.json();
+}
+
+const getMalayalam = async q => {
+	const request = await fetch(`https://olam.in/Dictionary/en_ml/${q}?json=1`);
+	return await request.json();
+}
+
+const renderMalayalam = (q, data) => {
+    if(isEmpty(data)) return;
+	let html = "";
+	data.forEach(element => {
+		html += `<li><h2> ${element.word} </h2><ul class="definitions">`;
+      	element.definitions.forEach(def => html += `<li>${def}</li>`);
+      	html += "</ul></li>";
+	});
+	document.getElementById("results").innerHTML += html;
+	addToStore(cleanUp(q), data);
+}
+
+const renderEnglish = (q, data) => {
+	if(isEmpty(data)) return;
+	let html = `<li><h2> ${q} </h2><ul class="definitions">`;;
+	data.forEach(element => {
+      	element.meaning.noun.forEach(x => html += `<li>${x.definition}</li>${x.example ? `<li>eg: ${x.example}</li>` : ''}`);
+	});
+	html += "</ul></li>";
+	document.getElementById("results").innerHTML += html;
+	//addToStore(cleanUp(q), data);
+}
+
+const noResults = data => {
+	if (!data || data.length < 1) {
+		document.getElementById("results").innerHTML = `No results found for ${q}`;
+		return;
+	}
+}
+
+const isEmpty = data => !data || data.length < 1;

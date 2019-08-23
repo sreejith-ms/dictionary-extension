@@ -1,40 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Olam</title>
+	<title>Dictionary</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link href="style.css" rel="stylesheet" type="text/css" />
 	<script type="module" src="main.js"></script>
-	<script src="zepto.js"></script>
 </head>
 <body>
 
-<div id="wrap">
-	<div id="logo">
-		<a href="http://olam.in" target="_blank"><img src="logo_small.png" alt="Olam"/></a>
-	</div>
-	
+<div id="wrap">	
 	<img src="loading.gif" alt="" id="loading" />
-
 	<div id="main">
 		<form method="get" action="" id="search">
 			<div>
-			<input type="hidden" name="action" value="en_ml" />
-			<label>ഒരു ഇംഗ്ലീഷ് വാക്ക് എഴുതുക</label>
 			<input type="text" name="q" id="q" value="" maxlength="50" />
-			<input type="submit" value="തിരയുക" class="button" />
+			<input type="submit" value="Search" class="button" />
 			</div>
-
 		</form>
-		
 	</div>
-	
 	<ul id="results">
-
 	</ul>
-	
 </div>
-
-
 </body>
 </html>
